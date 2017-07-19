@@ -14,6 +14,11 @@
 		0B113E471F15F8CC005F825C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B113E451F15F8CC005F825C /* LaunchScreen.storyboard */; };
 		0B113E521F15F8CC005F825C /* FakeInjectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B113E511F15F8CC005F825C /* FakeInjectionTests.swift */; };
 		0B113E5D1F15F8CC005F825C /* FakeInjectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B113E5C1F15F8CC005F825C /* FakeInjectionUITests.swift */; };
+		0BE182541F1F3B2E00C3A559 /* AVUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE182531F1F3B2E00C3A559 /* AVUtilities.swift */; };
+		0BE182561F1FA20F00C3A559 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE182551F1FA20F00C3A559 /* SettingViewController.swift */; };
+		22C8457BC5FEBCD2648E35A5 /* Pods_FakeInjectionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795A8880DEBB8ECEC859D2D7 /* Pods_FakeInjectionTests.framework */; };
+		89778D61CBE505CF4C8B2539 /* Pods_FakeInjection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD538822AE2DD7FA83BFBCD6 /* Pods_FakeInjection.framework */; };
+		EA357FD6D3C30270D91D5A5A /* Pods_FakeInjectionUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A067DB40F7AA089EB6331DE0 /* Pods_FakeInjectionUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +52,17 @@
 		0B113E581F15F8CC005F825C /* FakeInjectionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FakeInjectionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B113E5C1F15F8CC005F825C /* FakeInjectionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeInjectionUITests.swift; sourceTree = "<group>"; };
 		0B113E5E1F15F8CC005F825C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BE182531F1F3B2E00C3A559 /* AVUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVUtilities.swift; sourceTree = "<group>"; };
+		0BE182551F1FA20F00C3A559 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		795A8880DEBB8ECEC859D2D7 /* Pods_FakeInjectionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeInjectionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A067DB40F7AA089EB6331DE0 /* Pods_FakeInjectionUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeInjectionUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA4E4DDF7CC0AAD5F188B649 /* Pods-FakeInjectionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInjectionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInjectionTests/Pods-FakeInjectionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AC7E25D5270A8B1705D8E078 /* Pods-FakeInjectionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInjectionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInjectionTests/Pods-FakeInjectionTests.release.xcconfig"; sourceTree = "<group>"; };
+		BADF46611E07D3FE91BB2EFA /* Pods-FakeInjectionUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInjectionUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInjectionUITests/Pods-FakeInjectionUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE61D9360F67F51E22C54577 /* Pods-FakeInjection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInjection.release.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInjection/Pods-FakeInjection.release.xcconfig"; sourceTree = "<group>"; };
+		CB95A4C64EDFEB977377E8E8 /* Pods-FakeInjection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInjection.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInjection/Pods-FakeInjection.debug.xcconfig"; sourceTree = "<group>"; };
+		DB12F41E90BB1F839B4AFA07 /* Pods-FakeInjectionUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInjectionUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInjectionUITests/Pods-FakeInjectionUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FD538822AE2DD7FA83BFBCD6 /* Pods_FakeInjection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeInjection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89778D61CBE505CF4C8B2539 /* Pods_FakeInjection.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22C8457BC5FEBCD2648E35A5 /* Pods_FakeInjectionTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA357FD6D3C30270D91D5A5A /* Pods_FakeInjectionUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +100,8 @@
 				0B113E501F15F8CC005F825C /* FakeInjectionTests */,
 				0B113E5B1F15F8CC005F825C /* FakeInjectionUITests */,
 				0B113E3A1F15F8CC005F825C /* Products */,
+				6DFFB62775C0C02B70730C30 /* Pods */,
+				7D49133E8CC53E8652C355C9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,7 +120,9 @@
 			children = (
 				0B113E3C1F15F8CC005F825C /* AppDelegate.swift */,
 				0B113E3E1F15F8CC005F825C /* ViewController.swift */,
+				0BE182531F1F3B2E00C3A559 /* AVUtilities.swift */,
 				0B113E401F15F8CC005F825C /* Main.storyboard */,
+				0BE182551F1FA20F00C3A559 /* SettingViewController.swift */,
 				0B113E431F15F8CC005F825C /* Assets.xcassets */,
 				0B113E451F15F8CC005F825C /* LaunchScreen.storyboard */,
 				0B113E481F15F8CC005F825C /* Info.plist */,
@@ -125,6 +148,29 @@
 			path = FakeInjectionUITests;
 			sourceTree = "<group>";
 		};
+		6DFFB62775C0C02B70730C30 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CB95A4C64EDFEB977377E8E8 /* Pods-FakeInjection.debug.xcconfig */,
+				BE61D9360F67F51E22C54577 /* Pods-FakeInjection.release.xcconfig */,
+				AA4E4DDF7CC0AAD5F188B649 /* Pods-FakeInjectionTests.debug.xcconfig */,
+				AC7E25D5270A8B1705D8E078 /* Pods-FakeInjectionTests.release.xcconfig */,
+				BADF46611E07D3FE91BB2EFA /* Pods-FakeInjectionUITests.debug.xcconfig */,
+				DB12F41E90BB1F839B4AFA07 /* Pods-FakeInjectionUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7D49133E8CC53E8652C355C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FD538822AE2DD7FA83BFBCD6 /* Pods_FakeInjection.framework */,
+				795A8880DEBB8ECEC859D2D7 /* Pods_FakeInjectionTests.framework */,
+				A067DB40F7AA089EB6331DE0 /* Pods_FakeInjectionUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +178,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B113E611F15F8CC005F825C /* Build configuration list for PBXNativeTarget "FakeInjection" */;
 			buildPhases = (
+				F37EF107D05A49C1DEEF78EA /* [CP] Check Pods Manifest.lock */,
 				0B113E351F15F8CC005F825C /* Sources */,
 				0B113E361F15F8CC005F825C /* Frameworks */,
 				0B113E371F15F8CC005F825C /* Resources */,
+				483A6CE2EDA7207B4F218D28 /* [CP] Embed Pods Frameworks */,
+				8470652CE05CC994B9B1C5E5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,9 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B113E641F15F8CC005F825C /* Build configuration list for PBXNativeTarget "FakeInjectionTests" */;
 			buildPhases = (
+				D222451F3C6E702A391BE385 /* [CP] Check Pods Manifest.lock */,
 				0B113E491F15F8CC005F825C /* Sources */,
 				0B113E4A1F15F8CC005F825C /* Frameworks */,
 				0B113E4B1F15F8CC005F825C /* Resources */,
+				614172FC48F4F8415016F3D1 /* [CP] Embed Pods Frameworks */,
+				9728AD5D1A8264DF09B94340 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +219,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B113E671F15F8CC005F825C /* Build configuration list for PBXNativeTarget "FakeInjectionUITests" */;
 			buildPhases = (
+				ECFDEE312D579AEDA8FF4FD3 /* [CP] Check Pods Manifest.lock */,
 				0B113E541F15F8CC005F825C /* Sources */,
 				0B113E551F15F8CC005F825C /* Frameworks */,
 				0B113E561F15F8CC005F825C /* Resources */,
+				4C34A09DFEDD19FE26850738 /* [CP] Embed Pods Frameworks */,
+				2BF411D859CC0B5720722EBC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -257,13 +312,153 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2BF411D859CC0B5720722EBC /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FakeInjectionUITests/Pods-FakeInjectionUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		483A6CE2EDA7207B4F218D28 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FakeInjection/Pods-FakeInjection-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4C34A09DFEDD19FE26850738 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FakeInjectionUITests/Pods-FakeInjectionUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		614172FC48F4F8415016F3D1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FakeInjectionTests/Pods-FakeInjectionTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8470652CE05CC994B9B1C5E5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FakeInjection/Pods-FakeInjection-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9728AD5D1A8264DF09B94340 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FakeInjectionTests/Pods-FakeInjectionTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D222451F3C6E702A391BE385 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ECFDEE312D579AEDA8FF4FD3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F37EF107D05A49C1DEEF78EA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0B113E351F15F8CC005F825C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				0B113E3F1F15F8CC005F825C /* ViewController.swift in Sources */,
+				0BE182541F1F3B2E00C3A559 /* AVUtilities.swift in Sources */,
 				0B113E3D1F15F8CC005F825C /* AppDelegate.swift in Sources */,
+				0BE182561F1FA20F00C3A559 /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +610,7 @@
 		};
 		0B113E621F15F8CC005F825C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CB95A4C64EDFEB977377E8E8 /* Pods-FakeInjection.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Q7MWV852PW;
@@ -428,6 +624,7 @@
 		};
 		0B113E631F15F8CC005F825C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE61D9360F67F51E22C54577 /* Pods-FakeInjection.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = Q7MWV852PW;
@@ -441,6 +638,7 @@
 		};
 		0B113E651F15F8CC005F825C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA4E4DDF7CC0AAD5F188B649 /* Pods-FakeInjectionTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -456,6 +654,7 @@
 		};
 		0B113E661F15F8CC005F825C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AC7E25D5270A8B1705D8E078 /* Pods-FakeInjectionTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -471,6 +670,7 @@
 		};
 		0B113E681F15F8CC005F825C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BADF46611E07D3FE91BB2EFA /* Pods-FakeInjectionUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = Q7MWV852PW;
@@ -485,6 +685,7 @@
 		};
 		0B113E691F15F8CC005F825C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB12F41E90BB1F839B4AFA07 /* Pods-FakeInjectionUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = Q7MWV852PW;
@@ -516,6 +717,7 @@
 				0B113E631F15F8CC005F825C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B113E641F15F8CC005F825C /* Build configuration list for PBXNativeTarget "FakeInjectionTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +726,7 @@
 				0B113E661F15F8CC005F825C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B113E671F15F8CC005F825C /* Build configuration list for PBXNativeTarget "FakeInjectionUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +735,7 @@
 				0B113E691F15F8CC005F825C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
