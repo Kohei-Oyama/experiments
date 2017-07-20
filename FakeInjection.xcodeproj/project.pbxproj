@@ -16,6 +16,7 @@
 		0B113E5D1F15F8CC005F825C /* FakeInjectionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B113E5C1F15F8CC005F825C /* FakeInjectionUITests.swift */; };
 		0BE182541F1F3B2E00C3A559 /* AVUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE182531F1F3B2E00C3A559 /* AVUtilities.swift */; };
 		0BE182561F1FA20F00C3A559 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE182551F1FA20F00C3A559 /* SettingViewController.swift */; };
+		0BE182581F207DEA00C3A559 /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE182571F207DE900C3A559 /* VideoWriter.swift */; };
 		22C8457BC5FEBCD2648E35A5 /* Pods_FakeInjectionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795A8880DEBB8ECEC859D2D7 /* Pods_FakeInjectionTests.framework */; };
 		89778D61CBE505CF4C8B2539 /* Pods_FakeInjection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD538822AE2DD7FA83BFBCD6 /* Pods_FakeInjection.framework */; };
 		EA357FD6D3C30270D91D5A5A /* Pods_FakeInjectionUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A067DB40F7AA089EB6331DE0 /* Pods_FakeInjectionUITests.framework */; };
@@ -54,6 +55,7 @@
 		0B113E5E1F15F8CC005F825C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BE182531F1F3B2E00C3A559 /* AVUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVUtilities.swift; sourceTree = "<group>"; };
 		0BE182551F1FA20F00C3A559 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		0BE182571F207DE900C3A559 /* VideoWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoWriter.swift; sourceTree = "<group>"; };
 		795A8880DEBB8ECEC859D2D7 /* Pods_FakeInjectionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeInjectionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A067DB40F7AA089EB6331DE0 /* Pods_FakeInjectionUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeInjectionUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA4E4DDF7CC0AAD5F188B649 /* Pods-FakeInjectionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInjectionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInjectionTests/Pods-FakeInjectionTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			children = (
 				0B113E3C1F15F8CC005F825C /* AppDelegate.swift */,
 				0B113E3E1F15F8CC005F825C /* ViewController.swift */,
+				0BE182571F207DE900C3A559 /* VideoWriter.swift */,
 				0BE182531F1F3B2E00C3A559 /* AVUtilities.swift */,
 				0B113E401F15F8CC005F825C /* Main.storyboard */,
 				0BE182551F1FA20F00C3A559 /* SettingViewController.swift */,
@@ -455,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BE182581F207DEA00C3A559 /* VideoWriter.swift in Sources */,
 				0B113E3F1F15F8CC005F825C /* ViewController.swift in Sources */,
 				0BE182541F1F3B2E00C3A559 /* AVUtilities.swift in Sources */,
 				0B113E3D1F15F8CC005F825C /* AppDelegate.swift in Sources */,

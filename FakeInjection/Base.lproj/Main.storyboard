@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,9 +15,10 @@
         <scene sceneID="4Cm-Qq-B53">
             <objects>
                 <navigationController id="2Q0-en-dJU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="520-O6-2gw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="520-O6-2gw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Er9-Ii-B9L" kind="relationship" relationship="rootViewController" id="XFX-KJ-nvf"/>
@@ -88,15 +91,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dsN-NZ-2KT">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="94" y="365.5" width="187.5" height="301.5"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FaM-98-u5d">
-                                <rect key="frame" x="162.5" y="607" width="50" height="50"/>
+                                <rect key="frame" x="26" y="607" width="50" height="50"/>
                                 <color key="backgroundColor" red="0.87104636430000004" green="0.37938255069999999" blue="0.43383961920000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="BO6-wy-Qw1"/>
                                     <constraint firstAttribute="width" constant="50" id="at4-sR-jf8"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Start">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -104,19 +108,27 @@
                                     <action selector="tapStart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UCi-DT-Gcy"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EMY-P7-B15">
+                                <rect key="frame" x="93.5" y="64" width="187.5" height="301.5"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="dsN-NZ-2KT" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="84m-5w-005"/>
-                            <constraint firstItem="dsN-NZ-2KT" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="Jbm-dm-em3"/>
+                            <constraint firstItem="EMY-P7-B15" firstAttribute="bottom" secondItem="dsN-NZ-2KT" secondAttribute="top" id="CWx-as-fPL"/>
+                            <constraint firstItem="EMY-P7-B15" firstAttribute="height" secondItem="dsN-NZ-2KT" secondAttribute="height" id="EmJ-x4-ZbI"/>
+                            <constraint firstItem="dsN-NZ-2KT" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="1:2" id="Jbm-dm-em3"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="FaM-98-u5d" secondAttribute="bottom" constant="10" id="ObW-4T-rvt"/>
+                            <constraint firstItem="EMY-P7-B15" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="P6k-L5-dei"/>
+                            <constraint firstItem="EMY-P7-B15" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="1:2" id="heV-el-eIE"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dsN-NZ-2KT" secondAttribute="bottom" id="p6C-cz-PFh"/>
+                            <constraint firstItem="FaM-98-u5d" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="qlj-rL-bmL"/>
                             <constraint firstItem="dsN-NZ-2KT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sKe-nl-JSn"/>
-                            <constraint firstItem="FaM-98-u5d" firstAttribute="centerX" secondItem="dsN-NZ-2KT" secondAttribute="centerX" id="xwP-Gs-4Td"/>
+                            <constraint firstItem="EMY-P7-B15" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zw9-bz-PWs"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="dsN-NZ-2KT" id="Aqg-7x-mVu"/>
+                        <outlet property="imageViewLeft" destination="EMY-P7-B15" id="fKl-AH-ckx"/>
+                        <outlet property="imageViewRight" destination="dsN-NZ-2KT" id="3Nb-r4-m7m"/>
                         <outlet property="startButton" destination="FaM-98-u5d" id="NNA-qw-owN"/>
                     </connections>
                 </viewController>
