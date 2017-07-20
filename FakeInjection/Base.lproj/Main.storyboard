@@ -13,9 +13,10 @@
         <scene sceneID="4Cm-Qq-B53">
             <objects>
                 <navigationController id="2Q0-en-dJU" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="520-O6-2gw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="520-O6-2gw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Er9-Ii-B9L" kind="relationship" relationship="rootViewController" id="XFX-KJ-nvf"/>
@@ -105,7 +106,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dsN-NZ-2KT" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="84m-5w-005"/>
                             <constraint firstItem="dsN-NZ-2KT" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="Jbm-dm-em3"/>

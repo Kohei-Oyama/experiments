@@ -52,6 +52,7 @@ class ViewController: UIViewController {
         myFileOutput.startRecording(toOutputFileURL: fileURLBefore, recordingDelegate: self)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
+            self.mySession.stopRunning()
             self.myFileOutput.stopRecording()
         }
     }
@@ -60,7 +61,7 @@ class ViewController: UIViewController {
     func initCamera() {
         // セッション作成とクオリティ設定
         let session: AVCaptureSession = AVCaptureSession()
-        session.sessionPreset = AVCaptureSessionPresetiFrame960x540
+        session.sessionPreset = AVCaptureSessionPresetMedium
         // デバイスの取得とFPS設定
         let device: AVCaptureDevice = AVCaptureDevice.defaultDevice(withDeviceType: .builtInWideAngleCamera, mediaType: AVMediaTypeVideo, position: .back)
         device.activeVideoMinFrameDuration = CMTimeMake(1, 30)
@@ -78,7 +79,7 @@ class ViewController: UIViewController {
         // プレビュー
         if let videoLayer = AVCaptureVideoPreviewLayer.init(session: mySession) {
             videoLayer.frame = imageView.bounds
-            videoLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            //videoLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             imageView.layer.addSublayer(videoLayer)
         }
         mySession.startRunning()
@@ -114,9 +115,8 @@ extension ViewController: AVCaptureFileOutputRecordingDelegate {
 
             DispatchQueue.main.async(execute: {
                 playerLayer.frame = self.imageView.bounds
-                playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+                //playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                 self.imageView.layer.addSublayer(playerLayer)
-                self.mySession.stopRunning()
                 videoPlayer.play()
             })
         })
