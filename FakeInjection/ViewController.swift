@@ -43,7 +43,6 @@ class ViewController: UIViewController {
 
     @IBAction func tapStart(_ sender: UIButton) {
         startButton.isHidden = true
-        self.navigationController?.isNavigationBarHidden = true
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: fileURLAfter.path) {
             try! fileManager.removeItem(atPath: filePathAfter)
@@ -79,7 +78,6 @@ class ViewController: UIViewController {
         // プレビュー
         if let videoLayer = AVCaptureVideoPreviewLayer.init(session: mySession) {
             videoLayer.frame = imageView.bounds
-            //videoLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             imageView.layer.addSublayer(videoLayer)
         }
         mySession.startRunning()
@@ -96,9 +94,8 @@ class ViewController: UIViewController {
         self.mySession = nil
         self.myDevice = nil
 
-        startButton.isHidden = false
-        self.navigationController?.isNavigationBarHidden = false
-        initCamera()
+        // 終了したらセッティング画面に戻る
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -115,7 +112,6 @@ extension ViewController: AVCaptureFileOutputRecordingDelegate {
 
             DispatchQueue.main.async(execute: {
                 playerLayer.frame = self.imageView.bounds
-                //playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                 self.imageView.layer.addSublayer(playerLayer)
                 videoPlayer.play()
             })
