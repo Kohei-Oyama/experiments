@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import Photos
+import APIKit
 
 class ViewController: UIViewController {
 
@@ -25,6 +26,7 @@ class ViewController: UIViewController {
     var filePathAfter: String! // 編集ファイルパス
     var fileURLAfter: URL!
     var time: Int = 0 //折り返す秒数
+    var person: String = "" //被験者
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tapStart(_ sender: UIButton) {
+        fetchStartRequest()
         startButton.isHidden = true
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: fileURLAfter.path) {
@@ -96,6 +99,25 @@ class ViewController: UIViewController {
 
         // 終了したらセッティング画面に戻る
         self.navigationController?.popViewController(animated: true)
+    }
+
+    func fetchStartRequest(callback: (() -> Void)? = nil){
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss:SSSSSS"
+        let now = Date()
+        let startTime = formatter.string(from: now)
+        let request = GetStartRequest(person: person, reverseTime: time, startTime: startTime)
+        Session.send(request) { result in
+            switch result {
+            case .success( _):
+                print("SUCCESS!!!")
+                if let callback = callback {
+                    callback()
+                }
+            case .failure(let error):
+                print("error: \(error)")
+            }
+        }
     }
 }
 

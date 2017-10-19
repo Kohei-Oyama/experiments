@@ -1,12 +1,21 @@
 PODS:
-  - OpenCV (3.1.0.1)
+  - APIKit (3.1.1):
+    - Result (~> 3.0)
+  - OpenCV (3.3.0)
+  - Result (3.2.4)
+  - SwiftyJSON (3.1.4)
 
 DEPENDENCIES:
+  - APIKit (~> 3.0)
   - OpenCV
+  - SwiftyJSON (= 3.1.4)
 
 SPEC CHECKSUMS:
-  OpenCV: 41c4250e2b06a394d6fbb634b5fa622cdd846018
+  APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
+  OpenCV: 9b36d1abdbdbcc6e8cacb6c29d0e6777f87423bb
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 387537e83dd342b38e8f65b9a00dee6f594a17b9
+PODFILE CHECKSUM: 7268edc2a951411868ca8b58a6e526674b2eabc6
 
 COCOAPODS: 1.2.1
