@@ -17,12 +17,12 @@ protocol FakeInjectionRequest: Request {
 
 extension FakeInjectionRequest {
     var baseURL: URL {
-        let url: String = "http://192.168.11.5:8000"
+        let url: String = "http://192.168.11.9:8000"
         return URL(string: url)!
     }
 }
 
-struct GetStartRequest: FakeInjectionRequest {
+struct PostStartRequest: FakeInjectionRequest {
     typealias Response = String
 
     let person: String
@@ -46,4 +46,51 @@ struct GetStartRequest: FakeInjectionRequest {
         return "OK"
     }
 }
+
+struct PostReverseRequest: FakeInjectionRequest {
+    typealias Response = String
+
+    let reverseTime: String
+
+    var method: HTTPMethod {
+        return .post
+    }
+
+    var path: String {
+        return "reverse"
+    }
+
+    var parameters: Any? {
+        let param: [String:String] = ["reverseTime":"\(reverseTime)"]
+        return param
+    }
+
+    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+        return "OK"
+    }
+}
+
+struct PostEndRequest: FakeInjectionRequest {
+    typealias Response = String
+
+    let endTime: String
+
+    var method: HTTPMethod {
+        return .post
+    }
+
+    var path: String {
+        return "end"
+    }
+
+    var parameters: Any? {
+        let param: [String:String] = ["endTime":"\(endTime)"]
+        return param
+    }
+
+    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+        return "OK"
+    }
+}
+
 

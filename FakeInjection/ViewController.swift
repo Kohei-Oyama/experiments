@@ -97,20 +97,58 @@ class ViewController: UIViewController {
         self.mySession = nil
         self.myDevice = nil
 
+        fetchEndRequest()
         // 終了したらセッティング画面に戻る
         self.navigationController?.popViewController(animated: true)
     }
 
-    func fetchStartRequest(callback: (() -> Void)? = nil){
+    func nowTime() -> String{
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss:SSSSSS"
+        formatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss:SSS"
         let now = Date()
-        let startTime = formatter.string(from: now)
-        let request = GetStartRequest(person: person, reverseTime: time, startTime: startTime)
+        return formatter.string(from: now)
+    }
+
+    func fetchStartRequest(callback: (() -> Void)? = nil){
+        let startTime = nowTime()
+        let request = PostStartRequest(person: person, reverseTime: time, startTime: startTime)
         Session.send(request) { result in
             switch result {
             case .success( _):
                 print("SUCCESS!!!")
+                if let callback = callback {
+                    callback()
+                }
+            case .failure(let error):
+                print("error: \(error)")
+            }
+        }
+    }
+
+    func fetchReverseRequest(callback: (() -> Void)? = nil){
+        let reverseTime = nowTime()
+        let request = PostReverseRequest(reverseTime: reverseTime)
+        Session.send(request) { result in
+            switch result {
+            case .success( _):
+                print("Reverse!")
+                if let callback = callback {
+                    callback()
+                }
+            case .failure(let error):
+                print("error: \(error)")
+            }
+        }
+    }
+
+
+    func fetchEndRequest(callback: (() -> Void)? = nil){
+        let endTime = nowTime()
+        let request = PostEndRequest(endTime: endTime)
+        Session.send(request) { result in
+            switch result {
+            case .success( _):
+                print("END!")
                 if let callback = callback {
                     callback()
                 }
@@ -133,6 +171,7 @@ extension ViewController: AVCaptureFileOutputRecordingDelegate {
             NotificationCenter.default.addObserver(self, selector: #selector(ViewController.playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
 
             DispatchQueue.main.async(execute: {
+                self.fetchReverseRequest()
                 playerLayer.frame = self.imageView.bounds
                 self.imageView.layer.addSublayer(playerLayer)
                 videoPlayer.play()
