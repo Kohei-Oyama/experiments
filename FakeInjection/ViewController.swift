@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     var fileURLBefore: URL!
     var filePathAfter: String! // 編集ファイルパス
     var fileURLAfter: URL!
+    var placeURL: PlaceURL = .lab //場所によるURL
     var time: Int = 0 //折り返す秒数
     var person: String = "" //被験者
 
@@ -44,18 +45,25 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tapStart(_ sender: UIButton) {
-        fetchStartRequest()
         startButton.isHidden = true
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: fileURLAfter.path) {
             try! fileManager.removeItem(atPath: filePathAfter)
         }
         // 録画開始
+        fetchStartRequest()
         myFileOutput.startRecording(toOutputFileURL: fileURLBefore, recordingDelegate: self)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
             self.mySession.stopRunning()
             self.myFileOutput.stopRecording()
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2*time-(time/6))) {
+            for layer in self.imageView.layer.sublayers! {
+                layer.borderColor = UIColor.red.cgColor
+                layer.borderWidth = 4.0
+            }
         }
     }
 
@@ -97,9 +105,21 @@ class ViewController: UIViewController {
         self.mySession = nil
         self.myDevice = nil
 
+        for layer in self.imageView.layer.sublayers! {
+            layer.removeFromSuperlayer()
+        }
+
         fetchEndRequest()
-        // 終了したらセッティング画面に戻る
-        self.navigationController?.popViewController(animated: true)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/6)) {
+            self.imageView.layer.borderColor = UIColor.red.cgColor
+            self.imageView.layer.borderWidth = 8.0
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/3)) {
+            // 終了したらセッティング画面に戻る
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 
     func nowTime() -> String{
@@ -111,11 +131,11 @@ class ViewController: UIViewController {
 
     func fetchStartRequest(callback: (() -> Void)? = nil){
         let startTime = nowTime()
-        let request = PostStartRequest(person: person, reverseTime: time, startTime: startTime)
+        var request = PostStartRequest(person: person, reverseTime: time, startTime: startTime)
+        request.baseURL = URL(string: placeURL.rawValue)!
         Session.send(request) { result in
             switch result {
             case .success( _):
-                print("SUCCESS!!!")
                 if let callback = callback {
                     callback()
                 }
@@ -127,11 +147,11 @@ class ViewController: UIViewController {
 
     func fetchReverseRequest(callback: (() -> Void)? = nil){
         let reverseTime = nowTime()
-        let request = PostReverseRequest(reverseTime: reverseTime)
+        var request = PostReverseRequest(reverseTime: reverseTime)
+        request.baseURL = URL(string: placeURL.rawValue)!
         Session.send(request) { result in
             switch result {
             case .success( _):
-                print("Reverse!")
                 if let callback = callback {
                     callback()
                 }
@@ -144,11 +164,11 @@ class ViewController: UIViewController {
 
     func fetchEndRequest(callback: (() -> Void)? = nil){
         let endTime = nowTime()
-        let request = PostEndRequest(endTime: endTime)
+        var request = PostEndRequest(endTime: endTime)
+        request.baseURL = URL(string: placeURL.rawValue)!
         Session.send(request) { result in
             switch result {
             case .success( _):
-                print("END!")
                 if let callback = callback {
                     callback()
                 }
@@ -162,7 +182,6 @@ class ViewController: UIViewController {
 extension ViewController: AVCaptureFileOutputRecordingDelegate {
     // 録画完了
     public func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
-
         let avAsset = AVAsset(url: fileURLBefore)
         AVUtilities.reverse(avAsset, outputURL: fileURLAfter, completion: { [unowned self] (reversedAsset: AVAsset) in
             let playerItem = AVPlayerItem(asset: reversedAsset)

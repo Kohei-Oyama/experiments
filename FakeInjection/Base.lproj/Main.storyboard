@@ -38,11 +38,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" restorationIdentifier="timePicker" translatesAutoresizingMaskIntoConstraints="NO" id="eos-9s-IZL">
-                                <rect key="frame" x="0.0" y="310" width="375" height="216"/>
+                            <pickerView contentMode="scaleToFill" restorationIdentifier="Place Setting Picker" translatesAutoresizingMaskIntoConstraints="NO" id="08Y-o3-xcv" userLabel="Place Setting Picker">
+                                <rect key="frame" x="0.0" y="84" width="375" height="216"/>
+                            </pickerView>
+                            <pickerView contentMode="scaleToFill" restorationIdentifier="Person Setting Picker" translatesAutoresizingMaskIntoConstraints="NO" id="GIF-xz-9vs" userLabel="Person Setting Picker">
+                                <rect key="frame" x="0.0" y="311" width="187.5" height="216"/>
+                            </pickerView>
+                            <pickerView contentMode="scaleToFill" restorationIdentifier="timePicker" translatesAutoresizingMaskIntoConstraints="NO" id="eos-9s-IZL" userLabel="timePicker">
+                                <rect key="frame" x="187.5" y="311" width="187.5" height="216"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qjb-aj-lmD">
-                                <rect key="frame" x="137.5" y="576" width="100" height="70"/>
+                                <rect key="frame" x="137.5" y="577" width="100" height="70"/>
                                 <color key="backgroundColor" red="0.87104636430000004" green="0.37938255069999999" blue="0.43383961920000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="DMI-jO-WrT"/>
@@ -56,32 +62,33 @@
                                     <action selector="tapOKButton:" destination="Er9-Ii-B9L" eventType="touchUpInside" id="Ice-lL-933"/>
                                 </connections>
                             </button>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GIF-xz-9vs" userLabel="Person Setting Picker">
-                                <rect key="frame" x="0.0" y="84" width="375" height="216"/>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="GIF-xz-9vs" firstAttribute="centerX" secondItem="cBI-Lb-vlW" secondAttribute="centerX" id="C3R-L6-kBZ"/>
-                            <constraint firstItem="GIF-xz-9vs" firstAttribute="top" secondItem="KLN-bo-8Rr" secondAttribute="bottom" constant="20" id="F9w-wT-MGq"/>
-                            <constraint firstItem="eos-9s-IZL" firstAttribute="width" secondItem="cBI-Lb-vlW" secondAttribute="width" id="Fgs-np-nIz"/>
-                            <constraint firstItem="eos-9s-IZL" firstAttribute="centerX" secondItem="cBI-Lb-vlW" secondAttribute="centerX" id="LTP-QV-EjD"/>
-                            <constraint firstItem="Qjb-aj-lmD" firstAttribute="top" secondItem="eos-9s-IZL" secondAttribute="bottom" constant="50" id="jou-FF-23l"/>
+                            <constraint firstItem="08Y-o3-xcv" firstAttribute="top" secondItem="KLN-bo-8Rr" secondAttribute="bottom" constant="20" id="FeS-Nx-5le"/>
+                            <constraint firstItem="GIF-xz-9vs" firstAttribute="leading" secondItem="cBI-Lb-vlW" secondAttribute="leading" id="ORl-qp-O1h"/>
+                            <constraint firstAttribute="trailing" secondItem="eos-9s-IZL" secondAttribute="trailing" id="aHu-yy-YmM"/>
+                            <constraint firstItem="Qjb-aj-lmD" firstAttribute="top" secondItem="GIF-xz-9vs" secondAttribute="bottom" constant="50" id="duy-2r-I3y"/>
+                            <constraint firstItem="eos-9s-IZL" firstAttribute="leading" secondItem="GIF-xz-9vs" secondAttribute="trailing" id="fez-8d-3K3"/>
+                            <constraint firstItem="08Y-o3-xcv" firstAttribute="width" secondItem="cBI-Lb-vlW" secondAttribute="width" id="gFz-A1-rb3"/>
+                            <constraint firstItem="GIF-xz-9vs" firstAttribute="width" secondItem="eos-9s-IZL" secondAttribute="width" id="gGe-vD-hwr"/>
+                            <constraint firstItem="08Y-o3-xcv" firstAttribute="centerX" secondItem="cBI-Lb-vlW" secondAttribute="centerX" id="hDL-26-mJD"/>
                             <constraint firstItem="Qjb-aj-lmD" firstAttribute="centerX" secondItem="cBI-Lb-vlW" secondAttribute="centerX" id="rBK-wl-Vot"/>
-                            <constraint firstItem="GIF-xz-9vs" firstAttribute="width" secondItem="cBI-Lb-vlW" secondAttribute="width" id="uVs-9Q-X3m"/>
-                            <constraint firstItem="eos-9s-IZL" firstAttribute="top" secondItem="GIF-xz-9vs" secondAttribute="bottom" constant="10" id="zZh-WG-99M"/>
+                            <constraint firstItem="Lgm-5m-3jG" firstAttribute="top" secondItem="Qjb-aj-lmD" secondAttribute="bottom" constant="20" id="vS6-Hi-fux"/>
+                            <constraint firstItem="GIF-xz-9vs" firstAttribute="centerY" secondItem="eos-9s-IZL" secondAttribute="centerY" id="xfJ-uX-Fr5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YbW-0b-RbQ"/>
                     <connections>
                         <outlet property="personSettingPicker" destination="GIF-xz-9vs" id="dfK-NH-gaY"/>
+                        <outlet property="placeSettingPicker" destination="08Y-o3-xcv" id="doS-Rz-d86"/>
                         <outlet property="timeSettingPicker" destination="eos-9s-IZL" id="81a-o2-gQn"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="showViewController" id="TRv-Gb-oMq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mPP-gt-kmg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-809" y="139"/>
+            <point key="canvasLocation" x="-810.39999999999998" y="138.98050974512745"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">

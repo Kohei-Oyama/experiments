@@ -15,10 +15,20 @@ protocol FakeInjectionRequest: Request {
 
 }
 
+enum PlaceURL: String {
+    case lab = "http://192.168.11.9:8000"
+    case home = "http://192.168.11.5:8000"
+    case uTokyo = "http://10.213.200.206:8000"
+}
+
 extension FakeInjectionRequest {
     var baseURL: URL {
-        let url: String = "http://192.168.11.9:8000"
-        return URL(string: url)!
+        get {
+            return URL(string: "http://192.168.11.9:8000")!
+        }
+        set {
+            print(newValue)
+        }
     }
 }
 
