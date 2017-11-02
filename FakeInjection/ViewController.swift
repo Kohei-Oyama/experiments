@@ -18,6 +18,11 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var startButton: UIButton!
 
+    var timer = Timer()
+    var startTime: TimeInterval = 0     // Startボタンを押した時刻
+    var timeCount : Double = 0.0             // ラベルに表示する時間
+    var labelTimer: UILabel!     // タイムを表示するラベル
+
     var mySession : AVCaptureSession! // セッション
     var myDevice : AVCaptureDevice! // カメラデバイス
     var myFileOutput: AVCaptureMovieFileOutput! // 保存先
@@ -38,6 +43,15 @@ class ViewController: UIViewController {
         fileURLAfter = URL(fileURLWithPath: filePathAfter)
         // カメラ準備
         initCamera()
+
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        view.backgroundColor = UIColor.black
+        let item = UIBarButtonItem(customView: view)
+        self.navigationItem.rightBarButtonItem = item
+
+        labelTimer = UILabel(frame: CGRect(x: 5, y: 5, width: 100, height: 20))
+        labelTimer.textColor = UIColor.white
+        view.addSubview(labelTimer)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,17 +68,42 @@ class ViewController: UIViewController {
         fetchStartRequest()
         myFileOutput.startRecording(toOutputFileURL: fileURLBefore, recordingDelegate: self)
 
+        // 逆再生前に赤くなる
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time-(time/6))) {
+            for layer in self.imageView.layer.sublayers! {
+                layer.borderColor = UIColor.red.cgColor
+                layer.borderWidth = 8.0
+            }
+        }
+
+        // 指定秒数で録画終了する
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
             self.mySession.stopRunning()
             self.myFileOutput.stopRecording()
         }
 
+
+        // ブラックアウト前に赤くなる
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2*time-(time/6))) {
             for layer in self.imageView.layer.sublayers! {
                 layer.borderColor = UIColor.red.cgColor
-                layer.borderWidth = 4.0
+                layer.borderWidth = 8.0
             }
         }
+
+        // タイマーの表示
+        DispatchQueue.main.async(execute: {
+            self.startTime = Date().timeIntervalSince1970
+            self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        })
+    }
+
+    func update() {
+        timeCount = Date().timeIntervalSince1970 - startTime
+        let sec = Int(timeCount)
+        let msec = Int((timeCount - Double(sec)) * 100)
+        let displayStr = NSString(format: "%02d:%02d.%02d", sec/60, sec%60, msec) as String
+        labelTimer.text = displayStr
     }
 
     // カメラの準備処理
@@ -110,12 +149,11 @@ class ViewController: UIViewController {
         }
 
         fetchEndRequest()
-
+        // ブラックアウト後も赤くなる
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/6)) {
             self.imageView.layer.borderColor = UIColor.red.cgColor
             self.imageView.layer.borderWidth = 8.0
         }
-
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/3)) {
             // 終了したらセッティング画面に戻る
             self.navigationController?.popViewController(animated: true)
@@ -182,20 +220,27 @@ class ViewController: UIViewController {
 extension ViewController: AVCaptureFileOutputRecordingDelegate {
     // 録画完了
     public func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!) {
-        let avAsset = AVAsset(url: fileURLBefore)
-        AVUtilities.reverse(avAsset, outputURL: fileURLAfter, completion: { [unowned self] (reversedAsset: AVAsset) in
-            let playerItem = AVPlayerItem(asset: reversedAsset)
-            let videoPlayer = AVPlayer(playerItem: playerItem)
-            let playerLayer = AVPlayerLayer(player: videoPlayer)
-            NotificationCenter.default.addObserver(self, selector: #selector(ViewController.playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
 
-            DispatchQueue.main.async(execute: {
-                self.fetchReverseRequest()
-                playerLayer.frame = self.imageView.bounds
-                self.imageView.layer.addSublayer(playerLayer)
-                videoPlayer.play()
+        DispatchQueue.global().async {
+            let avAsset = AVAsset(url: self.fileURLBefore)
+            AVUtilities.reverse(avAsset, outputURL: self.fileURLAfter, completion: { [unowned self] (reversedAsset: AVAsset) in
+                let playerItem = AVPlayerItem(asset: reversedAsset)
+                let videoPlayer = AVPlayer(playerItem: playerItem)
+                let playerLayer = AVPlayerLayer(player: videoPlayer)
+                NotificationCenter.default.addObserver(self, selector: #selector(ViewController.playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+
+                DispatchQueue.main.async(execute: {
+                    self.fetchReverseRequest()
+                    for layer in self.imageView.layer.sublayers! {
+                        layer.borderWidth = 0
+                    }
+                    playerLayer.frame = self.imageView.bounds
+                    self.imageView.layer.addSublayer(playerLayer)
+                    videoPlayer.play()
+                })
             })
-        })
+        }
+
     }
 }
 
