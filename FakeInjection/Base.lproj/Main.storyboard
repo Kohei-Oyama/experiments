@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2Q0-en-dJU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2Q0-en-dJU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -39,7 +39,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" restorationIdentifier="Place Setting Picker" translatesAutoresizingMaskIntoConstraints="NO" id="08Y-o3-xcv" userLabel="Place Setting Picker">
-                                <rect key="frame" x="0.0" y="84" width="375" height="216"/>
+                                <rect key="frame" x="0.0" y="84" width="187.5" height="216"/>
                             </pickerView>
                             <pickerView contentMode="scaleToFill" restorationIdentifier="Person Setting Picker" translatesAutoresizingMaskIntoConstraints="NO" id="GIF-xz-9vs" userLabel="Person Setting Picker">
                                 <rect key="frame" x="0.0" y="311" width="187.5" height="216"/>
@@ -62,17 +62,31 @@
                                     <action selector="tapOKButton:" destination="Er9-Ii-B9L" eventType="touchUpInside" id="Ice-lL-933"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lui-v9-vEP">
+                                <rect key="frame" x="258" y="137" width="70" height="70"/>
+                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="TqH-xr-zge"/>
+                                    <constraint firstAttribute="height" constant="70" id="iXJ-mM-nMg"/>
+                                </constraints>
+                                <state key="normal" title="Mode N"/>
+                                <connections>
+                                    <action selector="tapModeButton:" destination="Er9-Ii-B9L" eventType="touchUpInside" id="XdJ-DL-96d"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="08Y-o3-xcv" firstAttribute="leading" secondItem="cBI-Lb-vlW" secondAttribute="leading" id="5kZ-hq-4u1"/>
+                            <constraint firstItem="eos-9s-IZL" firstAttribute="top" secondItem="lui-v9-vEP" secondAttribute="bottom" constant="104" id="7AT-gQ-GwQ"/>
                             <constraint firstItem="08Y-o3-xcv" firstAttribute="top" secondItem="KLN-bo-8Rr" secondAttribute="bottom" constant="20" id="FeS-Nx-5le"/>
                             <constraint firstItem="GIF-xz-9vs" firstAttribute="leading" secondItem="cBI-Lb-vlW" secondAttribute="leading" id="ORl-qp-O1h"/>
+                            <constraint firstItem="08Y-o3-xcv" firstAttribute="width" secondItem="GIF-xz-9vs" secondAttribute="width" id="WRv-fJ-n1d"/>
                             <constraint firstAttribute="trailing" secondItem="eos-9s-IZL" secondAttribute="trailing" id="aHu-yy-YmM"/>
                             <constraint firstItem="Qjb-aj-lmD" firstAttribute="top" secondItem="GIF-xz-9vs" secondAttribute="bottom" constant="50" id="duy-2r-I3y"/>
                             <constraint firstItem="eos-9s-IZL" firstAttribute="leading" secondItem="GIF-xz-9vs" secondAttribute="trailing" id="fez-8d-3K3"/>
-                            <constraint firstItem="08Y-o3-xcv" firstAttribute="width" secondItem="cBI-Lb-vlW" secondAttribute="width" id="gFz-A1-rb3"/>
                             <constraint firstItem="GIF-xz-9vs" firstAttribute="width" secondItem="eos-9s-IZL" secondAttribute="width" id="gGe-vD-hwr"/>
-                            <constraint firstItem="08Y-o3-xcv" firstAttribute="centerX" secondItem="cBI-Lb-vlW" secondAttribute="centerX" id="hDL-26-mJD"/>
+                            <constraint firstItem="lui-v9-vEP" firstAttribute="leading" secondItem="08Y-o3-xcv" secondAttribute="trailing" constant="70.5" id="mab-hs-cmn"/>
                             <constraint firstItem="Qjb-aj-lmD" firstAttribute="centerX" secondItem="cBI-Lb-vlW" secondAttribute="centerX" id="rBK-wl-Vot"/>
                             <constraint firstItem="Lgm-5m-3jG" firstAttribute="top" secondItem="Qjb-aj-lmD" secondAttribute="bottom" constant="20" id="vS6-Hi-fux"/>
                             <constraint firstItem="GIF-xz-9vs" firstAttribute="centerY" secondItem="eos-9s-IZL" secondAttribute="centerY" id="xfJ-uX-Fr5"/>
@@ -80,6 +94,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="YbW-0b-RbQ"/>
                     <connections>
+                        <outlet property="modeButton" destination="lui-v9-vEP" id="58P-NO-MHK"/>
                         <outlet property="personSettingPicker" destination="GIF-xz-9vs" id="dfK-NH-gaY"/>
                         <outlet property="placeSettingPicker" destination="08Y-o3-xcv" id="doS-Rz-d86"/>
                         <outlet property="timeSettingPicker" destination="eos-9s-IZL" id="81a-o2-gQn"/>

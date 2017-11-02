@@ -16,6 +16,10 @@ class SettingViewController: UIViewController {
 
     @IBOutlet weak var personSettingPicker: UIPickerView!
 
+    @IBOutlet weak var modeButton: UIButton!
+
+    var isModeReverse: Bool = true
+
     let placeSettingArray: [String] = ["lab", "home", "uTokyo"]
     var place: String = ""
     var placeURL: PlaceURL = .lab
@@ -41,6 +45,17 @@ class SettingViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    @IBAction func tapModeButton(_ sender: UIButton) {
+        isModeReverse = !isModeReverse
+        if isModeReverse {
+            modeButton.setTitle("R Mode", for: .normal)
+            modeButton.backgroundColor = UIColor.red
+        } else {
+            modeButton.setTitle("N Mode", for: .normal)
+            modeButton.backgroundColor = UIColor.blue
+        }
     }
 
     @IBAction func tapOKButton(_ sender: UIButton) {
@@ -87,6 +102,7 @@ extension SettingViewController: UIPickerViewDelegate {
             secondViewController.placeURL = placeURL
             secondViewController.time = time
             secondViewController.person = person
+            secondViewController.isModeReverse = isModeReverse
         }
     }
 

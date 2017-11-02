@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     var placeURL: PlaceURL = .lab //場所によるURL
     var time: Int = 0 //折り返す秒数
     var person: String = "" //被験者
+    var isModeReverse: Bool = true // 逆再生するか否か
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,43 +60,57 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tapStart(_ sender: UIButton) {
+
         startButton.isHidden = true
-        let fileManager = FileManager.default
-        if fileManager.fileExists(atPath: fileURLAfter.path) {
-            try! fileManager.removeItem(atPath: filePathAfter)
-        }
-        // 録画開始
-        fetchStartRequest()
-        myFileOutput.startRecording(toOutputFileURL: fileURLBefore, recordingDelegate: self)
-
-        // 逆再生前に赤くなる
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time-(time/6))) {
-            for layer in self.imageView.layer.sublayers! {
-                layer.borderColor = UIColor.red.cgColor
-                layer.borderWidth = 8.0
-            }
-        }
-
-        // 指定秒数で録画終了する
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
-            self.mySession.stopRunning()
-            self.myFileOutput.stopRecording()
-        }
-
-
-        // ブラックアウト前に赤くなる
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2*time-(time/6))) {
-            for layer in self.imageView.layer.sublayers! {
-                layer.borderColor = UIColor.red.cgColor
-                layer.borderWidth = 8.0
-            }
-        }
 
         // タイマーの表示
         DispatchQueue.main.async(execute: {
             self.startTime = Date().timeIntervalSince1970
             self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
         })
+
+        // 逆再生前に赤くなる
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time-(time/5))) {
+            for layer in self.imageView.layer.sublayers! {
+                layer.borderColor = UIColor.red.cgColor
+                layer.borderWidth = 8.0
+            }
+        }
+
+        // ブラックアウト前に赤くなる
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2*time-(time/5))) {
+            for layer in self.imageView.layer.sublayers! {
+                layer.borderColor = UIColor.red.cgColor
+                layer.borderWidth = 8.0
+            }
+        }
+
+        if isModeReverse {
+            let fileManager = FileManager.default
+            if fileManager.fileExists(atPath: fileURLAfter.path) {
+                try! fileManager.removeItem(atPath: filePathAfter)
+            }
+            // 録画開始
+            fetchStartRequest()
+            myFileOutput.startRecording(toOutputFileURL: fileURLBefore, recordingDelegate: self)
+
+            // 指定秒数で録画終了する
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
+                self.mySession.stopRunning()
+                self.myFileOutput.stopRecording()
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
+                for layer in self.imageView.layer.sublayers! {
+                    layer.borderWidth = 0
+                }
+            }
+            // 指定秒数の2倍時間で終了する
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2*time)) {
+                self.playerItemDidReachEnd()
+            }
+        }
+
     }
 
     func update() {
@@ -150,7 +165,7 @@ class ViewController: UIViewController {
 
         fetchEndRequest()
         // ブラックアウト後も赤くなる
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/6)) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/5)) {
             self.imageView.layer.borderColor = UIColor.red.cgColor
             self.imageView.layer.borderWidth = 8.0
         }
