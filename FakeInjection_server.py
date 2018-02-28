@@ -4,15 +4,19 @@ import falcon # ==1.3.0 by pip
 import serial # ==3.4 by pip
 import json, datetime, time, sys, threading # 標準
 
-ser = serial.Serial('/dev/tty.usbmodem1411',9600,timeout=1)
+ser = serial.Serial('/dev/tty.usbmodem1421',9600,timeout=1)
+# Arduinoから送られてくる時間[ms]を格納
 data_list = []
 # iPhoneの各イベントの絶対時刻[s]が格納
 second_list = []
+# 動画が逆再生モードか否か
+isModeReverse = True
 
 # Arduinoの受信
 def recvThread():
     global data_list
     global second_list
+    global isModeReverse
     c = 0
     while True:
         readdata = ser.readline()
@@ -25,8 +29,11 @@ def recvThread():
             elif c == 2:
                 print("Touch || Max", data_list[1], "[ms]")
             elif c == 3:
-                if len(second_list) < 2:
+                if not(isModeReverse):
+                    print("Max || Loosen", data_list[2], "[ms]")
+                elif (len(second_list) < 2 and isModeReverse == True):
                     print("Fast Loosen!")
+                    print("Max || Loosen 0 [ms]")
                 else:
                     r_time = round((second_list[1] - second_list[0]),3)
                     tmp = int(data_list[0]) + int(data_list[1]) + int(data_list[2]) - (1000*r_time)
@@ -51,6 +58,7 @@ class ItemsResource:
     def on_post(self, req, res, dataType):
         global data_list
         global second_list
+        global isModeReverse
 
         body = req.stream.read().decode('utf-8')
         data = json.loads(body)
@@ -60,6 +68,12 @@ class ItemsResource:
             reverseTime = data['reverseTime']
             print("Person -", person)
             print("ReverseTime -", reverseTime, "[s]")
+
+            tmp = data['isModeReverse']
+            if tmp == "true":
+                isModeReverse = True
+            else:
+                isModeReverse = False
 
             now = datetime.datetime.now()
             now_time = now.strftime("%Y/%m/%d %H:%M:%S:%f")
@@ -73,7 +87,6 @@ class ItemsResource:
             ser.write(flag)
 
         if dataType == "reverse":
-
             # サーバ基準で、StartからReverseまでの正しい時間
             reverse_time = nowTime()
             second_list.append(reverse_time)

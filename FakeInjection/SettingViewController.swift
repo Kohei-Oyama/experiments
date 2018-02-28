@@ -100,7 +100,7 @@ extension SettingViewController: UIPickerViewDelegate {
                 placeURL = .lab
             }
             secondViewController.placeURL = placeURL
-            secondViewController.time = time
+            secondViewController.reverseTime = time
             secondViewController.person = person
             secondViewController.isModeReverse = isModeReverse
         }

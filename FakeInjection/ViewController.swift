@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     var timer = Timer()
     var startTime: TimeInterval = 0     // Startボタンを押した時刻
     var timeCount : Double = 0.0             // ラベルに表示する時間
-    var labelTimer: UILabel!     // タイムを表示するラベル
+    var timerLabel: UILabel!     // タイムを表示するラベル
 
     var mySession : AVCaptureSession! // セッション
     var myDevice : AVCaptureDevice! // カメラデバイス
@@ -30,10 +30,16 @@ class ViewController: UIViewController {
     var fileURLBefore: URL!
     var filePathAfter: String! // 編集ファイルパス
     var fileURLAfter: URL!
-    var placeURL: PlaceURL = .lab //場所によるURL
-    var time: Int = 0 //折り返す秒数
+    var placeURL: PlaceURL! //場所URL
+    var reverseTime: Int = 0 //折り返す秒数
     var person: String = "" //被験者
     var isModeReverse: Bool = true // 逆再生するか否か
+
+    var flag0 = true
+    var flag1 = true
+    var flag2 = true
+    var flag3 = true
+    var flag4 = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,17 +48,19 @@ class ViewController: UIViewController {
         filePathAfter = NSHomeDirectory() + "/Documents/out.mp4"
         fileURLBefore = URL(fileURLWithPath: filePathBefore)
         fileURLAfter = URL(fileURLWithPath: filePathAfter)
+
         // カメラ準備
         initCamera()
 
+        // タイマー準備
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         view.backgroundColor = UIColor.black
         let item = UIBarButtonItem(customView: view)
         self.navigationItem.rightBarButtonItem = item
 
-        labelTimer = UILabel(frame: CGRect(x: 5, y: 5, width: 100, height: 20))
-        labelTimer.textColor = UIColor.white
-        view.addSubview(labelTimer)
+        timerLabel = UILabel(frame: CGRect(x: 5, y: 5, width: 100, height: 20))
+        timerLabel.textColor = UIColor.white
+        view.addSubview(timerLabel)
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,29 +68,13 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tapStart(_ sender: UIButton) {
-
         startButton.isHidden = true
 
-        // タイマーの表示
-        DispatchQueue.main.async(execute: {
-            self.startTime = Date().timeIntervalSince1970
-            self.timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-        })
+        startTime = Date().timeIntervalSince1970
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
 
-        // 逆再生前に赤くなる
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time-(time/5))) {
-            for layer in self.imageView.layer.sublayers! {
-                layer.borderColor = UIColor.red.cgColor
-                layer.borderWidth = 8.0
-            }
-        }
-
-        // ブラックアウト前に赤くなる
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2*time-(time/5))) {
-            for layer in self.imageView.layer.sublayers! {
-                layer.borderColor = UIColor.red.cgColor
-                layer.borderWidth = 8.0
-            }
+        DispatchQueue.global().async {
+            self.fetchStartRequest()
         }
 
         if isModeReverse {
@@ -91,26 +83,8 @@ class ViewController: UIViewController {
                 try! fileManager.removeItem(atPath: filePathAfter)
             }
             // 録画開始
-            fetchStartRequest()
             myFileOutput.startRecording(toOutputFileURL: fileURLBefore, recordingDelegate: self)
-
-            // 指定秒数で録画終了する
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
-                self.mySession.stopRunning()
-                self.myFileOutput.stopRecording()
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time)) {
-                for layer in self.imageView.layer.sublayers! {
-                    layer.borderWidth = 0
-                }
-            }
-            // 指定秒数の2倍時間で終了する
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2*time)) {
-                self.playerItemDidReachEnd()
-            }
         }
-
     }
 
     func update() {
@@ -118,7 +92,64 @@ class ViewController: UIViewController {
         let sec = Int(timeCount)
         let msec = Int((timeCount - Double(sec)) * 100)
         let displayStr = NSString(format: "%02d:%02d.%02d", sec/60, sec%60, msec) as String
-        labelTimer.text = displayStr
+        timerLabel.text = displayStr
+
+        if msec < 50 {
+            // 逆再生前に赤くなる
+            if sec == reverseTime - reverseTime/5 && flag0 {
+                flag0 = false
+                imageView.layer.borderColor = UIColor.red.cgColor
+                imageView.layer.borderWidth = 8.0
+            }
+
+            // ブラックアウト前に赤くなる
+            if sec == 2*reverseTime-(reverseTime/5)+1 && flag1 {
+                flag1 = false
+                imageView.layer.borderColor = UIColor.red.cgColor
+                imageView.layer.borderWidth = 8.0
+            }
+
+            // ブラックアウト後も赤くなる
+            if sec == 2*reverseTime + reverseTime/3 && flag2 {
+                flag2 = false
+                imageView.layer.borderColor = UIColor.red.cgColor
+                imageView.layer.borderWidth = 8.0
+            }
+
+            // 指定秒数で赤が消える (録画終了)
+            if sec == reverseTime && flag3 {
+                flag3 = false
+                imageView.layer.borderWidth = 0
+                if isModeReverse {
+                    mySession.stopRunning()
+                    myFileOutput.stopRecording()
+                }
+            }
+            // 指定秒数の2倍時間で終了する
+            if sec == 2*reverseTime && flag4 {
+                flag4 = false
+                imageView.layer.borderWidth = 0
+                let view = UIView(frame: self.imageView.bounds)
+                view.backgroundColor = UIColor.black
+                self.imageView.addSubview(view)
+                DispatchQueue.global().async {
+                    self.fetchEndRequest()
+                }
+                if isModeReverse {
+                    self.mySession = nil
+                    self.myDevice = nil
+                }
+            }
+        }
+        // 終了したらセッティング画面に戻る
+        if sec > 2*reverseTime + 2*(reverseTime/3) {
+            self.navigationController?.popViewController(animated: true)
+            flag0 = true
+            flag1 = true
+            flag2 = true
+            flag3 = true
+            flag4 = true
+        }
     }
 
     // カメラの準備処理
@@ -148,33 +179,6 @@ class ViewController: UIViewController {
         mySession.startRunning()
     }
 
-    // 逆再生後
-    func playerItemDidReachEnd() {
-        for output in self.mySession.outputs {
-            self.mySession.removeOutput(output as? AVCaptureOutput)
-        }
-        for input in self.mySession.inputs {
-            self.mySession.removeInput(input as? AVCaptureInput)
-        }
-        self.mySession = nil
-        self.myDevice = nil
-
-        for layer in self.imageView.layer.sublayers! {
-            layer.removeFromSuperlayer()
-        }
-
-        fetchEndRequest()
-        // ブラックアウト後も赤くなる
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/5)) {
-            self.imageView.layer.borderColor = UIColor.red.cgColor
-            self.imageView.layer.borderWidth = 8.0
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(time/3)) {
-            // 終了したらセッティング画面に戻る
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-
     func nowTime() -> String{
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss:SSS"
@@ -184,7 +188,7 @@ class ViewController: UIViewController {
 
     func fetchStartRequest(callback: (() -> Void)? = nil){
         let startTime = nowTime()
-        var request = PostStartRequest(person: person, reverseTime: time, startTime: startTime)
+        var request = PostStartRequest(person: person, reverseTime: reverseTime, startTime: startTime, isModeReverse: isModeReverse)
         request.baseURL = URL(string: placeURL.rawValue)!
         Session.send(request) { result in
             switch result {
@@ -242,13 +246,9 @@ extension ViewController: AVCaptureFileOutputRecordingDelegate {
                 let playerItem = AVPlayerItem(asset: reversedAsset)
                 let videoPlayer = AVPlayer(playerItem: playerItem)
                 let playerLayer = AVPlayerLayer(player: videoPlayer)
-                NotificationCenter.default.addObserver(self, selector: #selector(ViewController.playerItemDidReachEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
-
+                self.fetchReverseRequest()
                 DispatchQueue.main.async(execute: {
-                    self.fetchReverseRequest()
-                    for layer in self.imageView.layer.sublayers! {
-                        layer.borderWidth = 0
-                    }
+                    self.imageView.layer.borderWidth = 0
                     playerLayer.frame = self.imageView.bounds
                     self.imageView.layer.addSublayer(playerLayer)
                     videoPlayer.play()

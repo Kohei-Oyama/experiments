@@ -38,6 +38,7 @@ struct PostStartRequest: FakeInjectionRequest {
     let person: String
     let reverseTime: Int
     let startTime: String
+    let isModeReverse: Bool
 
     var method: HTTPMethod {
         return .post
@@ -48,7 +49,7 @@ struct PostStartRequest: FakeInjectionRequest {
     }
 
     var parameters: Any? {
-        let param: [String:String] = ["person":"\(person)","reverseTime":"\(reverseTime)","startTime":"\(startTime)"]
+        let param: [String:String] = ["person":"\(person)","reverseTime":"\(reverseTime)","startTime":"\(startTime)","isModeReverse":"\(isModeReverse)"]
         return param
     }
 
