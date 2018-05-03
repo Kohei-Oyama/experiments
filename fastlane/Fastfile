@@ -1,0 +1,42 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+fastlane_version "2.94.0"
+default_platform :ios
+
+platform :ios do
+
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+    cocoapods
+  end
+
+  desc "Runs all the unit and ui tests"
+  lane :test do
+    # cocoapods
+    # cathage
+    scan(
+      scheme: "FakeInjection",
+      clean: true
+    )
+  end
+
+  after_all do |lane|
+    if lane == :test
+      slack(message: "finish lane")
+    end
+  end
+
+end
