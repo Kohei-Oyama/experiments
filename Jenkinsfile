@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent {any}
 
   parameters {
     string(defaultValue: "test", description: "build type", name: "type")
