@@ -20,7 +20,12 @@ pipeline {
         }
       }
       steps {
-        sh 'fastlane ios test'
+	sh 'export PATH="$HOME/.rbenv/versions/2.3.1/bin:$PATH"'
+	sh 'export LANG=en_US.UTF-8'
+	sh 'export LANGUAGE=en_US.UTF-8'
+	sh 'export LC_ALL=en_US.UTF-8'
+	sh 'bundle install --path vendor/bundler'
+	sh 'bundle exec fastlane test'
       }
     }
 
