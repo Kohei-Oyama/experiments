@@ -20,7 +20,7 @@ pipeline {
         }
       }
       steps {
-	export PATH="$HOME/.rbenv/versions/2.3.1/bin:$PATH"
+	sh 'export PATH="$HOME/.rbenv/versions/2.3.1/bin:$PATH"'
 	sh 'export LANG=en_US.UTF-8'
 	sh 'export LANGUAGE=en_US.UTF-8'
 	sh 'export LC_ALL=en_US.UTF-8'
