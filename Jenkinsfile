@@ -27,6 +27,5 @@ pipeline {
 	sh 'bundle exec fastlane test'
       }
     }
-
   }
 }
