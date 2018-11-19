@@ -8,7 +8,6 @@ target 'FakeInjection' do
   # Pods for FakeInjection
   pod 'APIKit', '~> 3.0'
   pod 'SwiftyJSON', '3.1.4'
-  pod ‘OpenCV’
 
   target 'FakeInjectionTests' do
     inherit! :search_paths

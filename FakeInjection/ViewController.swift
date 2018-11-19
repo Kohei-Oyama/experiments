@@ -32,7 +32,6 @@ class ViewController: UIViewController {
     var fileURLAfter: URL!
     var placeURL: PlaceURL! //場所URL
     var reverseTime: Int = 0 //折り返す秒数
-    var person: String = "" //被験者
     var isModeReverse: Bool = true // 逆再生するか否か
 
     var flag0 = true
@@ -40,6 +39,8 @@ class ViewController: UIViewController {
     var flag2 = true
     var flag3 = true
     var flag4 = true
+
+    var requestConditions: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,15 +53,30 @@ class ViewController: UIViewController {
         // カメラ準備
         initCamera()
 
-        // タイマー準備
+        // タイマーを画面右上にセット
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
         view.backgroundColor = UIColor.black
         let item = UIBarButtonItem(customView: view)
         self.navigationItem.rightBarButtonItem = item
-
         timerLabel = UILabel(frame: CGRect(x: 5, y: 5, width: 100, height: 20))
         timerLabel.textColor = UIColor.white
         view.addSubview(timerLabel)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        // サーバに条件を別スレッドで問い合わせ
+        let completeAction: () -> Void = {
+            () -> Void in
+            self.requestConditions = false
+            self.startRecord()
+        }
+        DispatchQueue.global().async {
+            while (self.requestConditions) {
+                print("Request Now…")
+                self.fetchStartRequest(callback: completeAction)
+                sleep(1)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,15 +84,16 @@ class ViewController: UIViewController {
     }
 
     @IBAction func tapStart(_ sender: UIButton) {
-        startButton.isHidden = true
+        startRecord()
+    }
 
+    // 実験開始
+    func startRecord() {
+        self.requestConditions = false
+        startButton.isHidden = true
+        // タイマー開始
         startTime = Date().timeIntervalSince1970
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
-
-        DispatchQueue.global().async {
-            self.fetchStartRequest()
-        }
-
         if isModeReverse {
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: fileURLAfter.path) {
@@ -91,7 +108,7 @@ class ViewController: UIViewController {
         timeCount = Date().timeIntervalSince1970 - startTime
         let sec = Int(timeCount)
         let msec = Int((timeCount - Double(sec)) * 100)
-        let displayStr = NSString(format: "%02d:%02d.%02d", sec/60, sec%60, msec) as String
+        let displayStr = NSString(format: "%02d:%02d", sec/60, sec%60) as String
         timerLabel.text = displayStr
 
         if msec < 50 {
@@ -132,9 +149,6 @@ class ViewController: UIViewController {
                 let view = UIView(frame: self.imageView.bounds)
                 view.backgroundColor = UIColor.black
                 self.imageView.addSubview(view)
-                DispatchQueue.global().async {
-                    self.fetchEndRequest()
-                }
                 if isModeReverse {
                     self.mySession = nil
                     self.myDevice = nil
@@ -179,53 +193,15 @@ class ViewController: UIViewController {
         mySession.startRunning()
     }
 
-    func nowTime() -> String{
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ss:SSS"
-        let now = Date()
-        return formatter.string(from: now)
-    }
-
     func fetchStartRequest(callback: (() -> Void)? = nil){
-        let startTime = nowTime()
-        var request = PostStartRequest(person: person, reverseTime: reverseTime, startTime: startTime, isModeReverse: isModeReverse)
-        request.baseURL = URL(string: placeURL.rawValue)!
+        var request = GetConditionsRequest()
+        // request.baseURL = URL(string: placeURL.rawValue)!
         Session.send(request) { result in
             switch result {
-            case .success( _):
-                if let callback = callback {
-                    callback()
-                }
-            case .failure(let error):
-                print("error: \(error)")
-            }
-        }
-    }
-
-    func fetchReverseRequest(callback: (() -> Void)? = nil){
-        let reverseTime = nowTime()
-        var request = PostReverseRequest(reverseTime: reverseTime)
-        request.baseURL = URL(string: placeURL.rawValue)!
-        Session.send(request) { result in
-            switch result {
-            case .success( _):
-                if let callback = callback {
-                    callback()
-                }
-            case .failure(let error):
-                print("error: \(error)")
-            }
-        }
-    }
-
-
-    func fetchEndRequest(callback: (() -> Void)? = nil){
-        let endTime = nowTime()
-        var request = PostEndRequest(endTime: endTime)
-        request.baseURL = URL(string: placeURL.rawValue)!
-        Session.send(request) { result in
-            switch result {
-            case .success( _):
+            case .success(let conditions):
+                // サーバから取得した条件をセット
+                self.reverseTime = conditions.time
+                self.isModeReverse = conditions.isModeReverse
                 if let callback = callback {
                     callback()
                 }
@@ -246,7 +222,6 @@ extension ViewController: AVCaptureFileOutputRecordingDelegate {
                 let playerItem = AVPlayerItem(asset: reversedAsset)
                 let videoPlayer = AVPlayer(playerItem: playerItem)
                 let playerLayer = AVPlayerLayer(player: videoPlayer)
-                self.fetchReverseRequest()
                 DispatchQueue.main.async(execute: {
                     self.imageView.layer.borderWidth = 0
                     playerLayer.frame = self.imageView.bounds

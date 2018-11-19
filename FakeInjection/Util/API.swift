@@ -16,92 +16,55 @@ protocol FakeInjectionRequest: Request {
 }
 
 enum PlaceURL: String {
-    case lab = "http://192.168.11.23:8000"
+    case lab = "http://192.168.11.123:8000"
     case home = "http://192.168.11.5:8000"
     case uTokyo = "http://10.213.200.206:8000"
+    case manual = ""
 }
 
 extension FakeInjectionRequest {
     var baseURL: URL {
+        return URL(string: "http://192.168.11.5:8000")!
+    }
+    /*var baseURL: URL {
         get {
-            return URL(string: "http://192.168.11.23:8000")!
+            return URL(string: PlaceURL.lab.rawValue)!
         }
         set {
             print(newValue)
         }
-    }
+    }*/
 }
 
-struct PostStartRequest: FakeInjectionRequest {
-    typealias Response = String
-
-    let person: String
-    let reverseTime: Int
-    let startTime: String
-    let isModeReverse: Bool
+struct GetConditionsRequest: FakeInjectionRequest {
+    typealias Response = Conditions
 
     var method: HTTPMethod {
-        return .post
+        return .get
     }
 
     var path: String {
         return "start"
     }
 
-    var parameters: Any? {
-        let param: [String:String] = ["person":"\(person)","reverseTime":"\(reverseTime)","startTime":"\(startTime)","isModeReverse":"\(isModeReverse)"]
-        return param
-    }
-
     func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        return "OK"
+        guard let result = Conditions(json: JSON(object)) else {
+            print("error API")
+            throw ResponseError.unexpectedObject(object)
+        }
+        return result
     }
 }
 
-struct PostReverseRequest: FakeInjectionRequest {
-    typealias Response = String
+struct Conditions {
+    let isModeReverse: Bool
+    let time: Int
 
-    let reverseTime: String
+    init?(json: JSON) {
+        guard let isModeReverse: Bool = json["isModeReverse"].bool else { return nil }
+        guard let time: Int = json["time"].int else { return nil }
 
-    var method: HTTPMethod {
-        return .post
-    }
-
-    var path: String {
-        return "reverse"
-    }
-
-    var parameters: Any? {
-        let param: [String:String] = ["reverseTime":"\(reverseTime)"]
-        return param
-    }
-
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        return "OK"
+        self.isModeReverse = isModeReverse
+        self.time = time
     }
 }
-
-struct PostEndRequest: FakeInjectionRequest {
-    typealias Response = String
-
-    let endTime: String
-
-    var method: HTTPMethod {
-        return .post
-    }
-
-    var path: String {
-        return "end"
-    }
-
-    var parameters: Any? {
-        let param: [String:String] = ["endTime":"\(endTime)"]
-        return param
-    }
-
-    func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
-        return "OK"
-    }
-}
-
-

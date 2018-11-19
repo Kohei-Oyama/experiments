@@ -10,6 +10,13 @@ DEPENDENCIES:
   - OpenCV
   - SwiftyJSON (= 3.1.4)
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - APIKit
+    - OpenCV
+    - Result
+    - SwiftyJSON
+
 SPEC CHECKSUMS:
   APIKit: 7460983f490d3bde6aaaaa4164d18c9865a6f91d
   OpenCV: 9b36d1abdbdbcc6e8cacb6c29d0e6777f87423bb
@@ -18,4 +25,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7268edc2a951411868ca8b58a6e526674b2eabc6
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.0

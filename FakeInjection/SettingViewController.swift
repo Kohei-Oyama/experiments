@@ -14,21 +14,16 @@ class SettingViewController: UIViewController {
     
     @IBOutlet weak var timeSettingPicker: UIPickerView!
 
-    @IBOutlet weak var personSettingPicker: UIPickerView!
-
     @IBOutlet weak var modeButton: UIButton!
 
     var isModeReverse: Bool = true
 
-    let placeSettingArray: [String] = ["lab", "home", "uTokyo"]
+    let placeSettingArray: [String] = ["lab", "home", "uTokyo", "manual mode"]
     var place: String = ""
     var placeURL: PlaceURL = .lab
 
     let timeSettingArray: [Int] = [1,3,5,10,15,20,25,30]
     var time: Int = 0
-
-    let personSettingArray: [String] = ["Oyama","Omata","Kuwabara","Takahashi","Yoshida","Mikami","Sugiyama"]
-    var person: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +33,6 @@ class SettingViewController: UIViewController {
 
         timeSettingPicker.delegate = self
         timeSettingPicker.dataSource = self
-
-        personSettingPicker.delegate = self
-        personSettingPicker.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,11 +42,9 @@ class SettingViewController: UIViewController {
     @IBAction func tapModeButton(_ sender: UIButton) {
         isModeReverse = !isModeReverse
         if isModeReverse {
-            modeButton.setTitle("R Mode", for: .normal)
-            modeButton.backgroundColor = UIColor.red
+            modeButton.setTitle("R", for: .normal)
         } else {
-            modeButton.setTitle("N Mode", for: .normal)
-            modeButton.backgroundColor = UIColor.blue
+            modeButton.setTitle("N", for: .normal)
         }
     }
 
@@ -70,8 +60,6 @@ extension SettingViewController: UIPickerViewDelegate {
             res =  String(placeSettingArray[row])
         } else if pickerView == timeSettingPicker {
             res =  String(timeSettingArray[row])
-        } else if pickerView == personSettingPicker {
-            res =  String(personSettingArray[row])
         }
         return res
     }
@@ -81,11 +69,10 @@ extension SettingViewController: UIPickerViewDelegate {
             place = placeSettingArray[row]
         } else if pickerView == timeSettingPicker {
             time = timeSettingArray[row]
-        } else if pickerView == personSettingPicker {
-            person = personSettingArray[row]
         }
     }
 
+    // 遷移先のViewに値の受け渡し
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showViewController" {
             let secondViewController = segue.destination as! ViewController
@@ -96,12 +83,13 @@ extension SettingViewController: UIPickerViewDelegate {
                 placeURL = .home
             case "uTokyo":
                 placeURL = .uTokyo
+            case "manual mode":
+                placeURL = .manual
             default:
                 placeURL = .lab
             }
             secondViewController.placeURL = placeURL
             secondViewController.reverseTime = time
-            secondViewController.person = person
             secondViewController.isModeReverse = isModeReverse
         }
     }
@@ -120,8 +108,6 @@ extension SettingViewController: UIPickerViewDataSource {
             count = placeSettingArray.count
         } else if pickerView == timeSettingPicker {
             count = timeSettingArray.count
-        } else if pickerView == personSettingPicker {
-            count = personSettingArray.count
         }
         return count
     }
