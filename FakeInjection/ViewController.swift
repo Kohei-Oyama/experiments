@@ -54,28 +54,19 @@ class ViewController: UIViewController {
         initCamera()
 
         // タイマーを画面右上にセット
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 30))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         view.backgroundColor = UIColor.black
         let item = UIBarButtonItem(customView: view)
         self.navigationItem.rightBarButtonItem = item
-        timerLabel = UILabel(frame: CGRect(x: 5, y: 5, width: 100, height: 20))
+        timerLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 50))
+        timerLabel.font = UIFont.systemFont(ofSize: 30)
         timerLabel.textColor = UIColor.white
         view.addSubview(timerLabel)
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        // サーバに条件を別スレッドで問い合わせ
-        let completeAction: () -> Void = {
-            () -> Void in
-            self.requestConditions = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             self.startRecord()
-        }
-        DispatchQueue.global().async {
-            while (self.requestConditions) {
-                print("Request Now…")
-                self.fetchStartRequest(callback: completeAction)
-                sleep(1)
-            }
         }
     }
 
@@ -108,7 +99,7 @@ class ViewController: UIViewController {
         timeCount = Date().timeIntervalSince1970 - startTime
         let sec = Int(timeCount)
         let msec = Int((timeCount - Double(sec)) * 100)
-        let displayStr = NSString(format: "%02d:%02d", sec/60, sec%60) as String
+        let displayStr = NSString(format: "%02d", sec%60) as String
         timerLabel.text = displayStr
 
         if msec < 50 {

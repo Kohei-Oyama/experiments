@@ -33,6 +33,8 @@ class SettingViewController: UIViewController {
 
         timeSettingPicker.delegate = self
         timeSettingPicker.dataSource = self
+
+        performSegue(withIdentifier: "showViewController", sender: time)
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,7 +78,7 @@ extension SettingViewController: UIPickerViewDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showViewController" {
             let secondViewController = segue.destination as! ViewController
-            switch place {
+            /*switch place {
             case "lab":
                 placeURL = .lab
             case "home":
@@ -90,7 +92,12 @@ extension SettingViewController: UIPickerViewDelegate {
             }
             secondViewController.placeURL = placeURL
             secondViewController.reverseTime = time
-            secondViewController.isModeReverse = isModeReverse
+            secondViewController.isModeReverse = isModeReverse*/
+
+            // Xcodeのビルドで実験するならXcode側で決め打つ
+            secondViewController.reverseTime = 15
+            secondViewController.isModeReverse = true
+            //secondViewController.isModeReverse = false
         }
     }
 
